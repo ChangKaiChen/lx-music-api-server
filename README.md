@@ -65,9 +65,9 @@ middleware.LimiterMW()          # 针对单key限流，默认5s内允许10次请
 ```
 ## 可视化示例
 
-![Kibana](https://github.com/ChangKaiChen/lx-music-api-server/images/Kibana.png)
-![APMPlus](https://github.com/ChangKaiChen/lx-music-api-server/images/APMPlus.png)
-![Grafana](https://github.com/ChangKaiChen/lx-music-api-server/images/Grafana.png)
+![Kibana](https://github.com/ChangKaiChen/lx-music-api-server/tree/main/images/Kibana.png)
+![APMPlus](https://github.com/ChangKaiChen/lx-music-api-server/tree/main/images/APMPlus.png)
+![Grafana](https://github.com/ChangKaiChen/lx-music-api-server/tree/main/images/Grafana.png)
 ## 部署
 
 ---
