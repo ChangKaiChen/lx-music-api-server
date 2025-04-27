@@ -1,0 +1,12 @@
+log:
+  level: "INFO"
+  filepath: "logs/kg.log"
+quality: [ "128k", "320k", "flac", "flac24bit" ]
+expireTime: "86400s"
+users:
+    - token: ""
+      userid: "0"
+      mid: ""
+      refreshLogin:
+        enable: false
+        interval: 604800

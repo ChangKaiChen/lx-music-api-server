@@ -1,0 +1,9 @@
+log:
+  level: "INFO"
+  filepath: "logs/mg.log"
+quality: [ "128k", "320k", "flac", "flac24bit" ]
+users:
+  - token: ""
+    refreshLogin:
+      enable: false
+      interval: 604800

@@ -1,0 +1,10 @@
+log:
+  level: "INFO"
+  filepath: "logs/wy.log"
+quality: [ "128k", "320k", "flac", "flac24bit" ]
+expireTime: "1200s"
+users:
+  - cookie: ""
+    refreshLogin:
+      enable: false
+      interval: 604800

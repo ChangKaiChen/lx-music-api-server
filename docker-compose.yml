@@ -1,0 +1,215 @@
+services:
+  etcd:
+    image: bitnami/etcd:latest
+    container_name: lx-music-etcd
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+    ports:
+      - "2379:2379"
+    networks:
+      - lx-music
+    volumes:
+      - etcd-data:/bitnami/etcd
+
+  redis:
+    image: redis:latest
+    container_name: lx-music-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - lx-music
+    volumes:
+      - redis-data:/data
+
+  elasticsearch:
+    image: elasticsearch:8.17.5
+    container_name: lx-music-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    networks:
+      - lx-music
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+  kibana:
+    image: kibana:8.17.5
+    container_name: lx-music-kibana
+    ports:
+      - "5601:5601"
+    networks:
+      - lx-music
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: lx-music-prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - lx-music
+    volumes:
+      - ./global/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter
+    container_name: lx-music-node-exporter
+    ports:
+      - "9100:9100"
+    networks:
+      - lx-music
+    restart: always
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: lx-music-cadvisor
+    ports:
+      - "8080"
+    networks:
+      - lx-music
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+
+  redis-exporter:
+    image: oliver006/redis_exporter
+    container_name: lx-music-redis-exporter
+    ports:
+      - "9121:9121"
+    networks:
+      - lx-music
+    command:
+      - "--redis.addr=redis://redis:6379"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: lx-music-grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - lx-music
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+  auth:
+    container_name: lx-music-auth
+    build:
+      context: .
+      dockerfile: ./cmd/auth/Dockerfile
+    networks:
+      - lx-music
+    depends_on:
+      - etcd
+      - redis
+      - elasticsearch
+
+  gateway:
+    container_name: lx-music-gateway
+    build:
+      context: .
+      dockerfile: ./cmd/gateway/Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - lx-music
+    depends_on:
+      - etcd
+      - redis
+      - elasticsearch
+
+  kg:
+    container_name: lx-music-kg
+    build:
+      context: .
+      dockerfile: ./cmd/kg/Dockerfile
+    networks:
+      - lx-music
+    depends_on:
+      - etcd
+      - redis
+      - elasticsearch
+
+  kw:
+    container_name: lx-music-kw
+    build:
+      context: .
+      dockerfile: ./cmd/kw/Dockerfile
+    networks:
+      - lx-music
+    depends_on:
+      - etcd
+      - redis
+      - elasticsearch
+
+  mg:
+    container_name: lx-music-mg
+    build:
+      context: .
+      dockerfile: ./cmd/mg/Dockerfile
+    networks:
+      - lx-music
+    depends_on:
+      - etcd
+      - redis
+      - elasticsearch
+
+  script:
+    container_name: lx-music-script
+    build:
+      context: .
+      dockerfile: ./cmd/script/Dockerfile
+    networks:
+      - lx-music
+    depends_on:
+      - etcd
+      - redis
+      - elasticsearch
+
+  tx:
+    container_name: lx-music-tx
+    build:
+      context: .
+      dockerfile: ./cmd/tx/Dockerfile
+    networks:
+      - lx-music
+    depends_on:
+      - etcd
+      - redis
+      - elasticsearch
+
+  wy:
+    container_name: lx-music-wy
+    build:
+      context: .
+      dockerfile: ./cmd/wy/Dockerfile
+    networks:
+      - lx-music
+    depends_on:
+      - etcd
+      - redis
+      - elasticsearch
+
+networks:
+  lx-music:
+    driver: bridge
+
+volumes:
+  etcd-data:
+  redis-data:
+  elasticsearch-data:
+  prometheus-data:
+  grafana-data:

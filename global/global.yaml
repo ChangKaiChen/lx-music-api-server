@@ -1,0 +1,15 @@
+isLocal: true
+etcd:
+  addr: "etcd:2379"
+  authEnable: false
+  username: ""
+  password: ""
+  maxIdleTimeout: "30m"
+  minIdlePerAddress: 2
+redis:
+  addr: "redis:6379"
+  password: ""
+otel:        # APMPlus
+  enable: false
+  endpoint: ""
+  headers: ""

@@ -1,0 +1,6 @@
+log:
+  level: "INFO"
+  filepath: "logs/auth.log"
+whitelist:
+  - token: "public"
+  - token: "lx-music"

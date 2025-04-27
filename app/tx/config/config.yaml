@@ -1,0 +1,12 @@
+log:
+  level: "INFO"
+  filepath: "logs/tx.log"
+quality: [ "128k", "320k", "flac", "flac24bit" ]
+expireTime: "80400s"
+guid: "114514"
+users:
+  - uin: ""
+    qqMusicKey: ""
+    refreshLogin:
+      enable: false
+      interval: 604800

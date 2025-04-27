@@ -1,0 +1,9 @@
+log:
+  level: "INFO"
+  filepath: "logs/kw.log"
+quality: [ "128k", "320k", "flac", "flac24bit" ]
+expireTime: "3600s"
+users:
+  - uid: ""
+    token: ""
+    device_id: ""
