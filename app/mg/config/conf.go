@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"sync"
+	"time"
 )
 
 var (
@@ -29,8 +30,8 @@ type User struct {
 	RefreshLogin RefreshLogin `yaml:"refreshLogin"`
 }
 type RefreshLogin struct {
-	Enable   bool `yaml:"enable"`
-	Interval int  `yaml:"interval"`
+	Enable   bool          `yaml:"enable"`
+	Interval time.Duration `yaml:"interval"`
 }
 type Log struct {
 	Level    string `yaml:"level"`

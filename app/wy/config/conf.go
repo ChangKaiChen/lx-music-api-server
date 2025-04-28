@@ -42,8 +42,8 @@ type User struct {
 	RefreshLogin RefreshLogin `yaml:"refreshLogin"`
 }
 type RefreshLogin struct {
-	Enable   bool `yaml:"enable"`
-	Interval int  `yaml:"interval"`
+	Enable   bool          `yaml:"enable"`
+	Interval time.Duration `yaml:"interval"`
 }
 type Log struct {
 	Level    string `yaml:"level"`
@@ -109,7 +109,7 @@ func updateUser(users []User) {
 		if exists != 0 {
 			continue
 		}
-		err = listener.rdb.Set(listener.ctx, key, "", time.Duration(user.RefreshLogin.Interval)).Err()
+		err = listener.rdb.Set(listener.ctx, key, "", user.RefreshLogin.Interval).Err()
 		if err != nil {
 			log.Errorf("", "Failed to set key: %v", err)
 			return

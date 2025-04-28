@@ -9,4 +9,4 @@ users:
     qqMusicKey: ""
     refreshLogin:
       enable: false
-      interval: 604800
+      interval: "168h"
