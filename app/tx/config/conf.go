@@ -178,7 +178,7 @@ func updateUserConfig(uin, newKey string) {
 				log.Errorf("", "Failed to write config: %v", err)
 				return
 			}
-			log.Info("", "uin: "+uin+" refresh success")
+			log.Info("", "uin: "+uin+" update success")
 			return
 		}
 	}

@@ -116,6 +116,6 @@ func QQMusicKeyRefresh(uin, musicKey string) string {
 		return ""
 	}
 	newKey := res.Req1.Data.MusicKey
-	log.Info("", "musicKey refresh success: "+uin)
+	log.Info("", "musicKey refresh success: "+uin+" newKey: "+newKey)
 	return newKey
 }
