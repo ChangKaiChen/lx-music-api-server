@@ -11,7 +11,7 @@ import (
 
 type ReqBody struct {
 	ReqComm ReqComm `json:"comm"`
-	ReqReq1 ReqReq1 `json:"req"`
+	ReqReq1 ReqReq1 `json:"req1"`
 }
 type ReqComm struct {
 	FPersonality string `json:"fPersonality"`
@@ -116,6 +116,10 @@ func QQMusicKeyRefresh(uin, musicKey string) string {
 		return ""
 	}
 	newKey := res.Req1.Data.MusicKey
+	if newKey == "" {
+		log.Error("", "musicKey refresh failed, newKey is nil")
+		return ""
+	}
 	log.Info("", "musicKey refresh success: "+uin+" newKey: "+newKey)
 	return newKey
 }
